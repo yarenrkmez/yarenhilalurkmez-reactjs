@@ -7,7 +7,7 @@ type Props = {
     item: IProduct
 }
 
-const Container = tw.div`md:max-w-sm bg-white rounded-lg shadow-md mt-4`;
+const Container = tw.div`bg-white rounded-lg shadow-md m-4`;
 const ProductImg = tw.img`p-8 rounded-t-lg h-4/5`;
 const ProductBodyContainer = tw.div`px-5 pb-5`;
 const ProductName = tw.h5`text-xl font-semibold tracking-tight text-gray-900`;
@@ -24,7 +24,7 @@ const ProductItem = ({ item }: Props) => {
     } = item;
 
     return (
-        <Container>
+        <Container className='max-w-2xs'>
             <ProductImg src={avatar} alt={`product-${name}`} />
             <ProductBodyContainer>
                 <ProductName>

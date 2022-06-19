@@ -6,6 +6,8 @@ import SelectList from '../SelectList/SelectList';
 import tw from "twin.macro";
 import ProductItem from '../Products/ProductItem';
 import ProductList from '../Products/ProductList';
+import plusIcon from '../../assets/icons/plus.svg';
+import { PlusIcon } from '../../assets/icons';
 
 type Props = {}
 
@@ -13,13 +15,8 @@ const FilterSection = tw.div`flex flex-row mt-4 justify-between`;
 const Container = tw.div`m-10`;
 const ProductsText = tw.div`bg-white text-sm px-3 items-center flex rounded-md shadow-md`;
 const ProductsContainer = tw.div`flex mt-4`;
-
-const categoriesList = [
-    'Electronic',
-    'Furnitures',
-    'Clothing',
-    'Accessories',
-]
+const AddProductButton = tw.button`px-4 py-2 text-center bg-blue-900 rounded-full items-center`;
+const StickyBottomContainer = tw.div`sticky bottom-0 flex justify-end w-full`
 
 const Index = (props: Props) => {
     const [categoriesData, setCategoriesData] = useState<Array<ICategory>>();
@@ -61,25 +58,37 @@ const Index = (props: Props) => {
     if (loading) return <p>loading..</p>
 
     return (
-        <Container>
-            <Navbar />
-            <FilterSection className=''>
-                <ProductsText>
-                    <span>Apple Watch,Samsung,Mackbook Pro...</span>
-                </ProductsText>
-                <SelectList
-                    id="categories-select-list"
-                    optionList={categoriesData!}
-                    optionListPlaceholder="Categories"
-                    getSelectedVal={(val) => filterProducts(val as any)}
-                />
-            </FilterSection>
+        <>
+            <Container>
+                <Navbar />
+                <FilterSection className=''>
+                    <ProductsText>
+                        <span>Apple Watch,Samsung,Mackbook Pro...</span>
+                    </ProductsText>
+                    <SelectList
+                        id="categories-select-list"
+                        optionList={categoriesData!}
+                        optionListPlaceholder="Categories"
+                        getSelectedVal={(val) => filterProducts(val as any)}
+                    />
+                </FilterSection>
 
-            <ProductsContainer>
-                <ProductList products={products!} />
-            </ProductsContainer>
+                <ProductsContainer>
+                    <ProductList products={products!} />
+                </ProductsContainer>
 
-        </Container>
+            </Container>
+            <StickyBottomContainer>
+                <AddProductButton>
+                   <PlusIcon
+                   fill="white"
+                   strokeWidth={20}
+                   stroke="white"
+                   />
+                </AddProductButton>
+            </StickyBottomContainer>
+        </>
+
     )
 }
 

@@ -7,7 +7,7 @@ type Props = {
     products: Array<IProduct>
 }
 
-const Container = tw.div`flex flex-wrap justify-between`;
+const Container = tw.div`flex flex-wrap justify-center`;
 
 const ProductList = ({ products }: Props) => {
 
