@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AppService from '../../services/appService';
-import { ICategory } from '../../services/responses';
+import { ICategory, IProduct } from '../../services/responses';
 import Navbar from '../Navbar/Navbar'
 import SelectList from '../SelectList/SelectList';
 import tw from "twin.macro";
@@ -9,23 +9,30 @@ type Props = {}
 
 const Index = (props: Props) => {
     const [categoriesData, setCategoriesData] = useState<Array<ICategory>>();
+    const [products, setProducts] = useState<Array<IProduct>>();
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getCategoriesData();
+        getInitialData();
     }, []);
 
-    const getCategoriesData = async () => {
-        try {
-            const res = await AppService.getCategories();
-            setCategoriesData(res);
+    const getInitialData = async () => {
+        const results = await Promise.allSettled([
+            AppService.getCategories(),
+            AppService.getProducts()
+        ]);
+        results.forEach((result, index) => {
+            if (result.status = 'fulfilled') {
+                if (index === 0) {
+                    setCategoriesData((result as any).value);
+                } else {
+                    setProducts((result as any).value);
+                }
+            }
             setLoading(false);
-        } catch (error) {
-            console.log(error, "error");
-            setLoading(false);
-        }
-    };
-
+        })
+    }
 
     if (loading) return <p>loading..</p>
 
